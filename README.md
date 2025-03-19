@@ -1,14 +1,121 @@
-# Project
+# Azure Managed HSM Key attestation
 
-> This repo has been populated by an initial template to help get you started. Please
-> make sure to update the content to build a great experience for community-building.
+Key Attestation is a functionality of Azure Managed HSM. It enables a way to validate the integrity and authenticity of
+cryptographic keys stored within the hardware security module (HSM). It allows organizations to verify that keys have
+been generated and stored within a trusted, FIPS 140-3 Level 3 certified HSM without ever leaving the FIPS boundary.
+By providing cryptographic proof that the keys are securely handled, key attestation enhances trust in key management
+processes, enabling compliance with stringent security standards and regulations. This feature is especially valuable
+in scenarios where customers need assurance that their keys are protected from unauthorized access, even from cloud providers.
 
-As the maintainer of this project, please make a few updates:
 
-- Improving this README.MD file to provide a great experience
-- Updating SUPPORT.MD with content about this project's support experience
-- Understanding the security reporting process in SECURITY.MD
-- Remove this section from the README
+## Pre-requisites
+
+1. AZ CLI version: 2.69.0 or higher 
+
+Run `az --version` to find the version. If you need to install or upgrade, see [Install the Azure CLI](/cli/azure/install-azure-cli). 
+
+2. Python version: 3.13.2 or higher 
+
+Run `python3 --version` to find the version. 
+
+3. Pip3 version: 24.3.1 or higher 
+
+Run `pip3 --version` to find the version. 
+
+4. Azure Managed HSM RBAC Permissions: 
+Crypto user of the Managed HSM or a custom role with getkey permissions 
+
+
+## Steps to follow:
+
+### Step 1:
+Download or clone the Github repository with all the files required for key attestation
+
+```bash
+git clone https://github.com/Azure/azure-managed-hsm-key-attestation
+```
+
+### Step 2:
+
+Set up a virtual environment and install the required python packages from requirements.txt.
+In this example, we are naming the virtual environment “attestation”.
+
+Note: Make sure you are in  the repository you downloaded or cloned in [step 1](#step-1)
+#### Linux Instructions (Ubuntu)
+
+```bash
+python3 -m venv attestation
+source attestation/bin/activate
+pip3 install -r requirements.txt
+cd src/
+```
+
+#### Windows Instructions
+
+```cmd
+python3 –m venv attestation 
+attestation\Scripts\activate.bat 
+pip3 install –r requirements.txt
+cd src/
+```
+
+### Step 3:
+Get attestation data for a specific key from the HSM using the AZ CLI comand below. Including
+key version in the URI is optional. The JSON file contains key properties, attestation blob,
+and all certificates required for key attestation. In this example, the json file is named 
+attestation.json 
+
+```bash
+az rest --method get --uri https://<poolname>.managedhsm.azure.net/keys/<keyname>/<keyversion>/attestation?api-version=7.6-preview.1 --resource https://managedhsm.azure.net > <filename>.json
+```
+
+#### Example:
+
+- Download key attestation for a key named `contosokey`
+```bash
+az rest --method get --uri https://contoso.managedhsm.azure.net/keys/contosokey/attestation?api-version=7.6-preview.1 --resource https://managedhsm.azure.net > attestation.json 
+```
+
+- Download key attestation for a key named `contosokey`, specifying key version `48293232e672449b9008602b80618`.
+
+```bash
+az rest --method get --uri https://contoso.managedhsm.azure.net/keys/contosokey/48293232e672449b9008602b80618/attestation?api-version=7.6-preview.1 --resource https://managedhsm.azure.net > attestation2.json 
+```
+
+### Step 4:
+The python script validate_attestation.py extracts the attestation blob and certificates
+from the JSON file in the above step. It constructs a certificate chain to confirm that
+the key is signed by Marvell, the HSM vendor’s root, and additionally verifies that the
+key is signed with a Microsoft-signed certificate. It will also parse the attributes of
+the attestation binary and print the results. Symmetric keys will receive both public and
+private key attestation, whereas asymmetric keys will receive only private key attestation.
+There is an optional parameter of --v or --verbose which can be included to view the
+properties of the certificate chain and additional information on the attributes of the key. 
+
+```bash
+python3 validate_attestation.py -af <attestation.json>
+```
+
+#### Example:
+
+- Without verbose logs:
+
+```bash
+python3 validate_attestation.py -af attestation.json
+```
+
+- With verbose logs:
+
+```bash
+python3 validate_attestation.py -af attestation.json --verbose
+```
+
+You can validate all the certificates used in `/src/vendor/marvell/marvell_validate_key_attestation.py`
+by checking them against the Marvell website.
+
+- https://www.marvell.com/content/dam/marvell/en/public-collateral/security-solutions/liquid_security_certificate.zip
+- https://www.marvell.com/products/security-solutions/nitrox-hs-adapters/liquidsecurity2-certificate-ls2-g-axxx-mi-f-bo-v2.html
+
 
 ## Contributing
 

@@ -1,0 +1,25 @@
+{
+    "$schema": "https://json.schemastore.org/component-detection-manifest.json",
+    "Registrations": [
+        {
+            "Component": {
+                "Type": "other",
+                "other": {
+                    "Name": "parse attest file",
+                    "DownloadUrl": "https://www.marvell.com/content/dam/marvell/en/public-collateral/security-solutions/parse_attest_2.x.py"
+                }
+            },
+            "DevelopmentDependency": false
+        },
+        {
+            "Component": {
+                "Type": "other",
+                "other": {
+                    "Name": "verify attest file",
+                    "DownloadUrl": "https://www.marvell.com/content/dam/marvell/en/public-collateral/security-solutions/verify_attest.py"
+                }
+            },
+            "DevelopmentDependency": false
+        }
+    ]
+}
