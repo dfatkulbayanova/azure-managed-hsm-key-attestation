@@ -37,77 +37,83 @@ import pem
 from termcolor import colored
 
 # You can download the certificate from the marvell website and validate the following certificate is same. 
-# https://www.marvell.com/content/dam/marvell/en/public-collateral/security-solutions/liquid_security_certificate.zip
+# https://www.marvell.com/products/security-solutions/nitrox-hs-adapters/liquidsecurity-certificate-cnxxxxx-nfbe-x0-g-v3.html
 MARVELL_HSM_ROOT_CERTIFICATE = '''Certificate:
-Data:
-    Version: 1 (0x0)
-    Serial Number: 13901114464203103255 (0xc0eaadf434dedc17)
-Signature Algorithm: sha256WithRSAEncryption
-    Issuer: C=US, ST=California, L=San Jose, O=Cavium, Inc., OU=LiquidSecurity, CN=localca.liquidsecurity.cavium.com
-    Validity
-        Not Before: Nov 19 13:55:25 2015 GMT
-        Not After : Nov 16 13:55:25 2025 GMT
-    Subject: C=US, ST=California, L=San Jose, O=Cavium, Inc., OU=LiquidSecurity, CN=localca.liquidsecurity.cavium.com
-    Subject Public Key Info:
-        Public Key Algorithm: rsaEncryption
-            Public-Key: (2048 bit)
-            Modulus:
-                00:dc:92:fa:90:33:87:2f:66:37:72:a8:e2:c6:31:
-                38:ca:27:0b:df:c4:93:a1:56:ac:3a:a6:88:e0:50:
-                cc:f5:d1:55:3b:cf:70:ad:26:bc:07:70:44:b0:10:
-                35:31:52:43:31:ce:87:f9:e6:41:68:ad:44:4b:69:
-                55:42:8d:e7:58:6a:e1:22:b2:76:70:c1:25:a4:01:
-                e9:a9:f4:64:44:9b:c8:97:e8:15:ed:a1:9f:15:0d:
-                6a:0e:d8:7d:00:26:21:c2:33:ad:aa:25:e6:55:5e:
-                19:bc:03:fc:d6:1b:43:f2:2e:b0:88:34:7d:32:cf:
-                d6:a1:e8:17:30:76:c6:46:2e:f4:2f:92:95:0d:26:
-                1c:15:32:b6:fd:9c:8f:41:95:19:93:5a:1a:28:b7:
-                56:12:4d:fe:e3:7e:26:c4:91:cf:e9:37:ed:04:cf:
-                7d:11:15:a2:f7:32:1c:88:68:d2:52:db:6f:b5:d2:
-                d9:f2:e2:c3:94:4e:c3:c4:b5:72:9a:87:99:8f:94:
-                7a:67:ac:67:01:d7:cc:f9:63:18:2b:d2:f0:cd:63:
-                1f:85:08:f1:a8:f7:95:c6:ae:af:4d:61:f3:4c:97:
-                0b:12:78:54:ab:f0:3d:55:43:b1:d9:9a:2a:5e:4c:
-                1d:61:41:35:10:c3:f2:bf:46:6b:70:e4:d8:a5:8e:
-                46:13
-            Exponent: 65537 (0x10001)
-Signature Algorithm: sha256WithRSAEncryption
-     98:ea:6c:56:9a:dc:53:97:11:77:17:3d:7d:a5:08:77:5c:ca:
-     5f:13:c0:e4:7d:7f:74:6a:f3:b3:04:7d:bd:e8:78:af:45:6a:
-     b3:64:50:27:6f:b8:6b:37:3a:40:16:a0:58:9b:ff:d9:76:17:
-     b6:60:68:d9:49:a9:5a:f0:05:a3:af:62:e1:a0:b9:0a:14:a4:
-     3c:9b:aa:db:58:50:95:4b:72:ef:6f:03:d7:99:03:e5:02:25:
-     d8:5d:3f:b7:c2:c8:63:0e:f8:6f:7a:72:71:b7:19:34:b5:fd:
-     2a:c8:0d:4f:98:0a:75:44:95:0d:0f:ff:bd:ff:75:ef:88:9a:
-     87:8c:93:07:2a:89:48:b6:96:c7:f7:bc:61:91:61:73:2d:fc:
-     3c:54:c2:35:f0:8c:8a:56:0a:cf:b7:ed:cc:1b:34:70:2f:d1:
-     52:83:39:1f:e3:98:d7:f9:11:97:fe:b3:2e:31:da:b2:59:d4:
-     d4:ba:78:36:7d:44:1b:a0:08:b6:8d:ea:7b:72:6d:5e:18:94:
-     4e:e3:0c:8f:57:20:e9:bf:b4:f2:54:2d:91:8b:a4:ba:25:9e:
-     05:95:07:aa:ad:ce:7d:51:8c:1c:35:1c:8a:a9:a1:78:3e:f6:
-     cd:60:a4:b1:45:8a:74:ab:10:bd:5f:91:04:74:61:94:2b:25:
-     c9:24:b4:fb         
+    Data:
+        Version: 3 (0x2)
+        Serial Number: 0 (0x0)
+        Signature Algorithm: sha256WithRSAEncryption
+        Issuer: C = US, ST = California, L = San Jose, O = "Cavium, Inc.", OU = LiquidSecurity, CN = localca.liquidsecurity.cavium.com
+        Validity
+            Not Before: Jul 25 20:29:20 2024 GMT
+            Not After : Jul 23 20:29:20 2034 GMT
+        Subject: C = US, ST = California, L = San Jose, O = "Cavium, Inc.", OU = LiquidSecurity, CN = localca.liquidsecurity.cavium.com
+        Subject Public Key Info:
+            Public Key Algorithm: rsaEncryption
+                RSA Public-Key: (2048 bit)
+                Modulus:
+                    00:dc:92:fa:90:33:87:2f:66:37:72:a8:e2:c6:31:
+                    38:ca:27:0b:df:c4:93:a1:56:ac:3a:a6:88:e0:50:
+                    cc:f5:d1:55:3b:cf:70:ad:26:bc:07:70:44:b0:10:
+                    35:31:52:43:31:ce:87:f9:e6:41:68:ad:44:4b:69:
+                    55:42:8d:e7:58:6a:e1:22:b2:76:70:c1:25:a4:01:
+                    e9:a9:f4:64:44:9b:c8:97:e8:15:ed:a1:9f:15:0d:
+                    6a:0e:d8:7d:00:26:21:c2:33:ad:aa:25:e6:55:5e:
+                    19:bc:03:fc:d6:1b:43:f2:2e:b0:88:34:7d:32:cf:
+                    d6:a1:e8:17:30:76:c6:46:2e:f4:2f:92:95:0d:26:
+                    1c:15:32:b6:fd:9c:8f:41:95:19:93:5a:1a:28:b7:
+                    56:12:4d:fe:e3:7e:26:c4:91:cf:e9:37:ed:04:cf:
+                    7d:11:15:a2:f7:32:1c:88:68:d2:52:db:6f:b5:d2:
+                    d9:f2:e2:c3:94:4e:c3:c4:b5:72:9a:87:99:8f:94:
+                    7a:67:ac:67:01:d7:cc:f9:63:18:2b:d2:f0:cd:63:
+                    1f:85:08:f1:a8:f7:95:c6:ae:af:4d:61:f3:4c:97:
+                    0b:12:78:54:ab:f0:3d:55:43:b1:d9:9a:2a:5e:4c:
+                    1d:61:41:35:10:c3:f2:bf:46:6b:70:e4:d8:a5:8e:
+                    46:13
+                Exponent: 65537 (0x10001)
+        X509v3 extensions:
+            X509v3 Key Usage: critical
+                Digital Signature, Certificate Sign
+            X509v3 Basic Constraints: 
+                CA:TRUE
+    Signature Algorithm: sha256WithRSAEncryption
+         98:96:be:da:79:39:db:45:f3:c9:19:ce:50:e4:b1:15:ad:e6:
+         3d:d6:6a:74:7b:92:8d:df:7d:62:1b:70:d7:43:ac:74:ed:13:
+         18:e0:f3:cd:f8:cb:d5:80:83:c3:db:52:31:e9:7b:69:e9:58:
+         fd:55:cb:01:a5:5e:e1:fb:a5:fa:f6:ce:fd:23:1f:23:d1:75:
+         7e:eb:e0:27:ac:bb:9f:b6:35:23:37:0e:e2:23:db:21:39:86:
+         bd:69:24:e0:fd:1e:98:a7:0c:29:5c:7f:8b:dd:26:59:f9:51:
+         05:c8:18:39:80:ce:da:cf:46:89:be:e1:78:f1:f4:b1:34:dc:
+         1e:97:5d:55:0b:ac:64:ad:41:53:bb:32:35:dc:6a:98:7b:ed:
+         ab:5a:17:3f:e1:35:af:b3:53:e9:4b:30:34:2b:45:bb:29:81:
+         57:da:38:46:8b:b1:f5:b8:ea:d5:9d:e2:62:69:58:03:f5:b8:
+         08:6a:8f:d4:69:06:9b:8e:52:d3:eb:6c:04:f4:37:a0:a5:d2:
+         8f:38:76:c8:89:0a:79:5c:e5:75:ac:83:ff:a4:05:92:4a:2c:
+         98:ec:10:7b:73:56:9c:0b:fd:ee:70:3a:12:8d:33:54:12:c5:
+         48:93:76:6c:9b:68:e2:53:2d:17:0b:fa:d9:4f:16:99:90:76:
+         87:06:ec:7b
 -----BEGIN CERTIFICATE-----
-MIIDoDCCAogCCQDA6q30NN7cFzANBgkqhkiG9w0BAQsFADCBkTELMAkGA1UEBhMC
-VVMxEzARBgNVBAgMCkNhbGlmb3JuaWExETAPBgNVBAcMCFNhbiBKb3NlMRUwEwYD
-VQQKDAxDYXZpdW0sIEluYy4xFzAVBgNVBAsMDkxpcXVpZFNlY3VyaXR5MSowKAYD
-VQQDDCFsb2NhbGNhLmxpcXVpZHNlY3VyaXR5LmNhdml1bS5jb20wHhcNMTUxMTE5
-MTM1NTI1WhcNMjUxMTE2MTM1NTI1WjCBkTELMAkGA1UEBhMCVVMxEzARBgNVBAgM
-CkNhbGlmb3JuaWExETAPBgNVBAcMCFNhbiBKb3NlMRUwEwYDVQQKDAxDYXZpdW0s
-IEluYy4xFzAVBgNVBAsMDkxpcXVpZFNlY3VyaXR5MSowKAYDVQQDDCFsb2NhbGNh
-LmxpcXVpZHNlY3VyaXR5LmNhdml1bS5jb20wggEiMA0GCSqGSIb3DQEBAQUAA4IB
-DwAwggEKAoIBAQDckvqQM4cvZjdyqOLGMTjKJwvfxJOhVqw6pojgUMz10VU7z3Ct
-JrwHcESwEDUxUkMxzof55kForURLaVVCjedYauEisnZwwSWkAemp9GREm8iX6BXt
-oZ8VDWoO2H0AJiHCM62qJeZVXhm8A/zWG0PyLrCINH0yz9ah6BcwdsZGLvQvkpUN
-JhwVMrb9nI9BlRmTWhoot1YSTf7jfibEkc/pN+0Ez30RFaL3MhyIaNJS22+10tny
-4sOUTsPEtXKah5mPlHpnrGcB18z5Yxgr0vDNYx+FCPGo95XGrq9NYfNMlwsSeFSr
-8D1VQ7HZmipeTB1hQTUQw/K/Rmtw5NiljkYTAgMBAAEwDQYJKoZIhvcNAQELBQAD
-ggEBAJjqbFaa3FOXEXcXPX2lCHdcyl8TwOR9f3Rq87MEfb3oeK9FarNkUCdvuGs3
-OkAWoFib/9l2F7ZgaNlJqVrwBaOvYuGguQoUpDybqttYUJVLcu9vA9eZA+UCJdhd
-P7fCyGMO+G96cnG3GTS1/SrIDU+YCnVElQ0P/73/de+ImoeMkwcqiUi2lsf3vGGR
-YXMt/DxUwjXwjIpWCs+37cwbNHAv0VKDOR/jmNf5EZf+sy4x2rJZ1NS6eDZ9RBug
-CLaN6ntybV4YlE7jDI9XIOm/tPJULZGLpLolngWVB6qtzn1RjBw1HIqpoXg+9s1g
-pLFFinSrEL1fkQR0YZQrJckktPs=
+MIIDvzCCAqegAwIBAgIBADANBgkqhkiG9w0BAQsFADCBkTELMAkGA1UEBhMCVVMx
+EzARBgNVBAgMCkNhbGlmb3JuaWExETAPBgNVBAcMCFNhbiBKb3NlMRUwEwYDVQQK
+DAxDYXZpdW0sIEluYy4xFzAVBgNVBAsMDkxpcXVpZFNlY3VyaXR5MSowKAYDVQQD
+DCFsb2NhbGNhLmxpcXVpZHNlY3VyaXR5LmNhdml1bS5jb20wHhcNMjQwNzI1MjAy
+OTIwWhcNMzQwNzIzMjAyOTIwWjCBkTELMAkGA1UEBhMCVVMxEzARBgNVBAgMCkNh
+bGlmb3JuaWExETAPBgNVBAcMCFNhbiBKb3NlMRUwEwYDVQQKDAxDYXZpdW0sIElu
+Yy4xFzAVBgNVBAsMDkxpcXVpZFNlY3VyaXR5MSowKAYDVQQDDCFsb2NhbGNhLmxp
+cXVpZHNlY3VyaXR5LmNhdml1bS5jb20wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAw
+ggEKAoIBAQDckvqQM4cvZjdyqOLGMTjKJwvfxJOhVqw6pojgUMz10VU7z3CtJrwH
+cESwEDUxUkMxzof55kForURLaVVCjedYauEisnZwwSWkAemp9GREm8iX6BXtoZ8V
+DWoO2H0AJiHCM62qJeZVXhm8A/zWG0PyLrCINH0yz9ah6BcwdsZGLvQvkpUNJhwV
+Mrb9nI9BlRmTWhoot1YSTf7jfibEkc/pN+0Ez30RFaL3MhyIaNJS22+10tny4sOU
+TsPEtXKah5mPlHpnrGcB18z5Yxgr0vDNYx+FCPGo95XGrq9NYfNMlwsSeFSr8D1V
+Q7HZmipeTB1hQTUQw/K/Rmtw5NiljkYTAgMBAAGjIDAeMA4GA1UdDwEB/wQEAwIC
+hDAMBgNVHRMEBTADAQH/MA0GCSqGSIb3DQEBCwUAA4IBAQCYlr7aeTnbRfPJGc5Q
+5LEVreY91mp0e5KN331iG3DXQ6x07RMY4PPN+MvVgIPD21Ix6Xtp6Vj9VcsBpV7h
++6X69s79Ix8j0XV+6+AnrLuftjUjNw7iI9shOYa9aSTg/R6YpwwpXH+L3SZZ+VEF
+yBg5gM7az0aJvuF48fSxNNwel11VC6xkrUFTuzI13GqYe+2rWhc/4TWvs1PpSzA0
+K0W7KYFX2jhGi7H1uOrVneJiaVgD9bgIao/UaQabjlLT62wE9DegpdKPOHbIiQp5
+XOV1rIP/pAWSSiyY7BB7c1acC/3ucDoSjTNUEsVIk3Zsm2jiUy0XC/rZTxaZkHaH
+Bux7
 -----END CERTIFICATE-----'''
 # You can retrieve the certificate from the marvell website and validate the following certificate is same.
 # https://www.marvell.com/products/security-solutions/nitrox-hs-adapters/liquidsecurity2-certificate-ls2-g-axxx-mi-f-bo-v2.html.

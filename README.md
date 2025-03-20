@@ -113,7 +113,7 @@ python3 validate_attestation.py -af attestation.json --verbose
 You can validate all the certificates used in `/src/vendor/marvell/marvell_validate_key_attestation.py`
 by checking them against the Marvell website.
 
-- https://www.marvell.com/content/dam/marvell/en/public-collateral/security-solutions/liquid_security_certificate.zip
+- https://www.marvell.com/products/security-solutions/nitrox-hs-adapters/liquidsecurity-certificate-cnxxxxx-nfbe-x0-g-v3.html
 - https://www.marvell.com/products/security-solutions/nitrox-hs-adapters/liquidsecurity2-certificate-ls2-g-axxx-mi-f-bo-v2.html
 
 
