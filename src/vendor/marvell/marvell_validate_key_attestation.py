@@ -348,42 +348,43 @@ def verify_certs_and_attestation_inner(attestation_blob: bytes, certificate_list
     verify = verify_attestation_blob(attestation_blob, marvell_issued_partition_certificate, firmware_version, verbose)
     if not verify:
         return False
-    print(colored(f'Success!! Attestation blob integrity established with certificate issued by HSM Manufacturer (Marvell)', 'green'))
+    print(colored(f'Success!! Attestation blob integrity established with { "below " if verbose else ""}certificate issued by HSM Manufacturer (Marvell)', 'green'))
     if verbose:
         pretty_print_certificate(marvell_issued_partition_certificate)
 
-    #Step 4: Find partition root level Microsoft self signed certificate.
-    microsoft_self_signed_partition_root_cert = get_self_signed_certificate(certificate_list)
-    if not microsoft_self_signed_partition_root_cert:
-        print("Microsoft self signed partition root certificate not found in the bundle.")
+    print('Verifying certificate chain with partition root certificate...')
+    #Step 4: Find partition root level certificate.
+    partition_root_cert = get_self_signed_certificate(certificate_list)
+    if not partition_root_cert:
+        print("Partition root certificate not found in the bundle.")
         return False
     
     if verbose:
-        print(colored(f'Microsoft self signed partition root certificate:', 'green'))
-        pretty_print_certificate(microsoft_self_signed_partition_root_cert)
+        print(colored(f'Partition root certificate:', 'green'))
+        pretty_print_certificate(partition_root_cert)
 
-    # Step 5: Find the partition certificate issued by microsoft self signed partition root certificate.
-    microsoft_issued_partition_certificate = find_issued_certificate(certificate_list, verbose, microsoft_self_signed_partition_root_cert)
-    if not microsoft_issued_partition_certificate:
-        print("Microsoft issued partition certificate not found in the bundle.")
+    # Step 5: Find the partition certificate issued by partition root certificate.
+    partition_root_issued_certificate = find_issued_certificate(certificate_list, verbose, partition_root_cert)
+    if not partition_root_issued_certificate:
+        print("Partition root issued intermediate certificate not found in the bundle.")
         return False
 
     if verbose:
-        print(colored(f'Found certificate issued by Microsoft self signed partition root certificate:', 'green'))
-        pretty_print_certificate(microsoft_issued_partition_certificate)
-    print(colored(f'Certificate chain established with Microsoft self signed root certificate ', 'green'))
+        print(colored(f'Found certificate issued by partition root certificate:', 'green'))
+        pretty_print_certificate(partition_root_issued_certificate)
+    print(colored(f'Certificate chain established with partition root certificate ', 'green'))
     # Step 6: Ensure that the partition certificate that chains up to the microsoft adapter root certificate validates the key attestation blob.
 
-    print('Verifying attestation with certificate issued by Microsoft self signed certificate')
-    verify = verify_attestation_blob(attestation_blob, microsoft_issued_partition_certificate, firmware_version, verbose)
+    print('Verifying attestation with certificate issued by partition root certificate')
+    verify = verify_attestation_blob(attestation_blob, partition_root_issued_certificate, firmware_version, verbose)
     if not verify:
         return False
 
-    print(colored(f'Success!! Attestation blob integrity established with certificate issued by Microsoft', 'green'))
+    print(colored(f'Success!! Attestation blob integrity established with {"below " if verbose else ""}partition certificate', 'green'))
     if verbose:
-        pretty_print_certificate(microsoft_issued_partition_certificate)
+        pretty_print_certificate(partition_root_issued_certificate)
 
-    microsoft_issued_partition_certificate_public_key_bytes: bytes = microsoft_issued_partition_certificate.public_key().public_bytes(
+    partition_root_issued_certificate_public_key_bytes: bytes = partition_root_issued_certificate.public_key().public_bytes(
                                                             serialization.Encoding.PEM,
                                                             serialization.PublicFormat.SubjectPublicKeyInfo)
     
@@ -392,9 +393,10 @@ def verify_certs_and_attestation_inner(attestation_blob: bytes, certificate_list
                                                             serialization.PublicFormat.SubjectPublicKeyInfo)
     
     # Step 7. Ensure the public keys of the partition certificates issued by microsoft and marvell match.
-    if microsoft_issued_partition_certificate_public_key_bytes != marvell_issued_partition_certificate_public_key_bytes:
-        print("Public keys of Microsoft issued and Marvell issued certificates do not match.")
+    if partition_root_issued_certificate_public_key_bytes != marvell_issued_partition_certificate_public_key_bytes:
+        print("Public keys of partition root issued intermediate certificate and Marvell issued certificates do not match.")
         return False
+
 
     return True
 

@@ -55,7 +55,7 @@ CAVIUM_ATTESTATION_OFFSET = 20
 ATTRIBUTE_NAMES = {
     0x0100: ("OBJ_ATTR_KEY_TYPE", "Subclass type of the key."),
     0x0162: ("OBJ_ATTR_EXTRACTABLE", "Indicates if key can be extracted."),
-    0x0164: ("OBJ_ATTR_NEVER_EXTRACTABLE", "Indicates if key can never be extracted."),
+    0x0164: ("OBJ_ATTR_NEVER_EXTRACTABLE", "Will be CK_TRUE if key has never had the CKA_EXTRACTABLE attribute set to CK_TRUE."),
     0x0122: ("OBJ_ATTR_PUBLIC_EXPONENT", "RSA key public exponent value."),
     0x0000: ("OBJ_ATTR_CLASS", "Class type of the key."),
     0x0102: ("OBJ_ATTR_ID", "Key identifier."),
@@ -67,10 +67,14 @@ ATTRIBUTE_NAMES = {
     0x0108: ("OBJ_ATTR_SIGN", "Indicates if key can be used for signing."),
     0x010A: ("OBJ_ATTR_VERIFY", "Indicates if key can be used for verifying."),
     0x010C: ("OBJ_ATTR_DERIVE", "Indicates if key supports key derivation."),
+    0x0163: ("OBJ_ATTR_LOCAL", "Indicates if key was generated locally."),
+    0x0210: ("OBJ_ATTR_WRAP_WITH_TRUSTED", "Indicates if key can only be wrapped with a wrapping key that has OBJ_ATTR_TRUSTED set."),
+    0x0086: ("OBJ_ATTR_TRUSTED", "The key can be trusted for the application that it was created."),
 }
 
-NON_VERBOSE_ATTRS = [0x0100, 0x0162, 0x0164, 0x0122, 0x0000, 0x0102]
-VERBOSE_ATTRS = NON_VERBOSE_ATTRS + [0x0103, 0x0104, 0x0105, 0x0106, 0x0107, 0x0108, 0x010A, 0x010C]
+NON_VERBOSE_ATTRS = [0x0100, 0x0162, 0x0164, 0x0122, 0x0000, 0x0102, 0x0163]
+NON_VERBOSE_BOOLEAN_ATTRS = [0x0162, 0x0164, 0x0163, 0x0103, 0x0104, 0x0105, 0x0106, 0x0107, 0x0108, 0x010A, 0x010C, 0x0210, 0x0086]
+VERBOSE_ATTRS = NON_VERBOSE_ATTRS + [0x0103, 0x0104, 0x0105, 0x0106, 0x0107, 0x0108, 0x010A, 0x010C, 0x0210, 0x0086]
 
 # Utility Functions
 def interpret_value(attr_type, attr_value):
@@ -130,7 +134,7 @@ def interpret_value(attr_type, attr_value):
             b'08': "CKO_OTP_KEY",          
         }
         return class_type_mapping.get(attr_value.encode('utf-8'), "Unknown Class Type")
-    elif attr_type in [0x0162, 0x0164]:
+    elif attr_type in NON_VERBOSE_BOOLEAN_ATTRS:
         return "CK_TRUE" if attr_value == '01' else "CK_FALSE"
     return attr_value
 
@@ -199,8 +203,8 @@ def print_attributes(attributes, verbose=False, pretty=False, output="table"):
     if pretty:
         console = Console()
         table = Table(title=header_text, title_style="bold green")
-        table.add_column("Attribute", style="cyan bold")
-        table.add_column("Interpreted Value", style="green bold")
+        table.add_column("Attribute", style="cyan bold", justify="left")
+        table.add_column("Interpreted Value", style="green bold", justify="left")
         table.add_column("Description", style="magenta bold")
         for row in rows:
             table.add_row(*row)

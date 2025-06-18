@@ -10,7 +10,7 @@ in scenarios where customers need assurance that their keys are protected from u
 
 ## Pre-requisites
 
-1. AZ CLI version: 2.69.0 or higher 
+1. AZ CLI version: 2.73.0 or higher 
 
 Run `az --version` to find the version. If you need to install or upgrade, see [Install the Azure CLI](/cli/azure/install-azure-cli). 
 
@@ -61,25 +61,45 @@ cd src/
 
 ### Step 3:
 Get attestation data for a specific key from the HSM using the AZ CLI comand below. Including
-key version in the URI is optional. The JSON file contains key properties, attestation blob,
+key version is optional. The JSON file contains key properties, attestation blob,
 and all certificates required for key attestation. In this example, the json file is named 
 attestation.json 
 
 ```bash
-az rest --method get --uri https://<poolname>.managedhsm.azure.net/keys/<keyname>/<keyversion>/attestation?api-version=7.6-preview.1 --resource https://managedhsm.azure.net > <filename>.json
+az keyvault key get-attestation --hsm-name <poolname> --name <keyname> --version <keyversion> --file <filename>.json
 ```
+
+Or
+```bash
+az keyvault key get-attestation --id https://<poolname>.managedhsm.azure.net/keys/<keyname>/<keyversion> --file <filename>.json 
+```
+
+
 
 #### Example:
 
-- Download key attestation for a key named `contosokey`
+For a key named `contosokey` in HSM named `contoso`:
+
 ```bash
-az rest --method get --uri https://contoso.managedhsm.azure.net/keys/contosokey/attestation?api-version=7.6-preview.1 --resource https://managedhsm.azure.net > attestation.json 
+az keyvault key get-attestation --hsm-name contoso --name contosokey  --file attestation.json 
 ```
 
-- Download key attestation for a key named `contosokey`, specifying key version `48293232e672449b9008602b80618`.
+Or 
 
 ```bash
-az rest --method get --uri https://contoso.managedhsm.azure.net/keys/contosokey/48293232e672449b9008602b80618/attestation?api-version=7.6-preview.1 --resource https://managedhsm.azure.net > attestation2.json 
+az keyvault key get-attestation --id https://contoso.managedhsm.azure.net/keys/contosokey --file attestation.json
+```
+
+For a key named `contosokey` in HSM named `contoso`, with a specific key version `48293232e672449b9008602b80618`: 
+
+```bash
+az keyvault key get-attestation --hsm-name contoso --name contosokey --version 48293232e672449b9008602b80618 --file attestation.json 
+```
+
+Or 
+
+```bash
+az keyvault key get-attestation --id https://contoso.managedhsm.azure.net/keys/contosokey/48293232e672449b9008602b80618 --file attestation.json 
 ```
 
 ### Step 4:
