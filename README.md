@@ -40,15 +40,20 @@ git clone https://github.com/Azure/azure-managed-hsm-key-attestation
 Set up a virtual environment and install the required python packages from requirements.txt.
 In this example, we are naming the virtual environment “attestation”.
 
+
+
 Note: Make sure you are in  the repository you downloaded or cloned in [step 1](#step-1)
 #### Linux Instructions (Ubuntu)
 
 ```bash
 python3 -m venv attestation
 source attestation/bin/activate
-pip3 install -r requirements.txt
+pip3 install -r requirements.txt   
 cd src/
 ```
+FYI : You may need to create file requirements.txt if it is not in the location from where you execute command. Copy paste it from repository and run vi requirements.txt then paste the content, and :wq! press enter
+You now have the file created.(if step pip3 install -r requirements.txt   gives you error for that as non existing file)
+
 
 #### Windows Instructions
 
